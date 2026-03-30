@@ -1,0 +1,5 @@
+globalaccount               = "xxx-xxxx-xxxx-xxxx-xxx"
+subaccount_name             = "Joule_Studio"
+subaccount_region           = "eu10"
+identity_provider           = "xxxxxx.accounts.ondemand.com"
+subaccount_subdomain        = "js-subdomain"

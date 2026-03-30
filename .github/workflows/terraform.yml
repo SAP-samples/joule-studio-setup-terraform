@@ -1,0 +1,90 @@
+# .github/workflows/terraform.yml
+name: Terraform Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Terraform action to perform'
+        required: true
+        default: 'plan'
+        type: choice
+        options:
+          - plan
+          - apply
+          - destroy
+  # Or on pull request (plan only)
+  pull_request:
+    branches: [main]
+
+jobs:
+  terraform:
+    name: Terraform ${{ github.event.inputs.action }}
+    runs-on: ubuntu-latest
+    
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+      # From GitHub Variables
+      TF_VAR_subaccount_name: ${{ vars.SUBACCOUNT_NAME }}
+      TF_VAR_subaccount_region: ${{ vars.SUBACCOUNT_REGION }}
+      
+      # From GitHub Secrets
+      TF_VAR_btp_username: ${{ secrets.BTP_USERNAME }}
+      TF_VAR_btp_password: ${{ secrets.BTP_PASSWORD }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: "1.9.0"
+      
+      - name: Debug - Check Variables
+        run: |
+          echo "╔═══════════════════════════════════════════════════════════╗"
+          echo "║  JOULE STUDIO TERRAFORM MAGIC IN PROGRESS...              ║"
+          echo "║  Grab a coffee, this might take a while                   ║"
+          echo "╚═══════════════════════════════════════════════════════════╝"
+          echo ""
+          echo "From terraform.tfvars (the sacred scroll):"
+          echo "   Global Account: $(grep 'globalaccount' terraform.tfvars | cut -d'=' -f2 | tr -d ' "')"
+          echo "   Identity Provider: $(grep 'identity_provider' terraform.tfvars | cut -d'=' -f2 | tr -d ' "')"
+          echo ""
+          echo "From GitHub Variables (the secret vault):"
+          echo "   Subaccount Name: $TF_VAR_subaccount_name"
+          echo "   Region: $TF_VAR_subaccount_region"
+          echo ""
+          echo "Plot twist: If any value above is empty, your deployment will be sadder than a 404 page."
+          echo "Fix it in terraform.tfvars or GitHub Variables before Terraform throws a tantrum!"
+          echo ""
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Plan
+        if: github.event.inputs.action == 'plan' || github.event.inputs.action == 'apply'
+        run: |
+          terraform plan \
+            -var-file=terraform.tfvars \
+            -var="subaccount_name=$TF_VAR_subaccount_name" \
+            -var="subaccount_region=$TF_VAR_subaccount_region" \
+            -out=tfplan
+
+      - name: Terraform Apply
+        if: github.event.inputs.action == 'apply'
+        run: terraform apply -auto-approve tfplan
+
+      - name: Terraform Destroy
+        if: github.event.inputs.action == 'destroy'
+        run: |
+          terraform destroy \
+            -var-file=terraform.tfvars \
+            -var="subaccount_name=$TF_VAR_subaccount_name" \
+            -var="subaccount_region=$TF_VAR_subaccount_region" \
+            -auto-approve
+
