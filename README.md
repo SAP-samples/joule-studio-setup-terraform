@@ -53,7 +53,7 @@ Before using this template, ensure you have:
 ## Setup and Configuration
 
 1. Click **Use this template** button on this repository and choose **Create a new repository**
-2. Provide a repo name, make visibility of your repo as **Private** and select **Create repository***
+2. Provide a repo name, make visibility of your repo as **Private** and select **Create repository**
 3. Update the `terraform.tfvars` with your global account subdomain and identity_provider and commit the change. This is one time update.
 
 ```sh
@@ -63,7 +63,7 @@ Before using this template, ensure you have:
 
 ![Global account subdomain](images/globalaccount-subdomain.png)
 
-4. Add 2 **Secrets** from **Settings** → **Secrets and variables** → **Actions** → **Secrets** → **New repository secret** ):
+4. Add 2 **Secrets** from **Settings** → **Secrets and variables** → **Actions** → **Secrets** → **New repository secret** :
 
    - `BTP_USERNAME` - Your BTP email
    - `BTP_PASSWORD` - Your BTP password
@@ -72,7 +72,7 @@ Before using this template, ensure you have:
 
    Note: The BTP username and password provided here should have administrator access within the global account mentioned in Step 3.
 
-5. Add 2 **Variables** from **Settings** → **Secrets and variables** → **Actions** → **Variables** → **New repository variable** ):
+5. Add 2 **Variables** from **Settings** → **Secrets and variables** → **Actions** → **Variables** → **New repository variable** :
 
    - `SUBACCOUNT_NAME` - e.g., `my-joule-studio`
    - `SUBACCOUNT_REGION` - e.g., `eu10`
@@ -81,7 +81,7 @@ Before using this template, ensure you have:
 
 Note: These variables must be updated for each new subaccount since subaccount names must be unique and the region must be a Joule supported data center. By storing them as GitHub variables, they can be modified without changing the Terraform scripts(.tf files).
 
-6. Go to **Actions** → **Terraform Deploy** → **Run workflow** → From `Terraform action to perform` dropdown, select `apply` → **Run workflow** 
+6. Go to **Actions** → **Terraform Deploy** → **Run workflow** → From `Terraform action to perform` dropdown, select `apply` → **Run workflow** :
 
 ![Github Workflow Deploy](images/github-workflow-deploy.png)
 
@@ -91,11 +91,11 @@ Note: These variables must be updated for each new subaccount since subaccount n
 
 ## Create a Joule Formation
 
-The last step to complete the Joule Studio setup is to create a `Joule Formation`. By creating a formation, you logically group multiple systems and services together so they can work as a unified solution. The Formation is what makes Joule aware of the connected systems and able to orchestrate across them. Unfortunately, this cannot be automated via Terraform yet, so run the Joule booster after running the Terraform script to perform this step automatically.
+The last step to complete the Joule Studio setup is to create a **Joule Formation**. By creating a formation, you logically group multiple systems and services together so they can work as a unified solution. The Formation is what makes Joule aware of the connected systems and able to orchestrate across them. Unfortunately, this cannot be automated via Terraform yet, so run the Joule booster after running the Terraform script to perform this step automatically.
 
 ## Known Issues
 
-No known issues.
+No known issues at this time.
 
 
 ## References

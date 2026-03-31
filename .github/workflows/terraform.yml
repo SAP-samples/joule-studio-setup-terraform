@@ -56,7 +56,7 @@ jobs:
           echo "   Subaccount Name: $TF_VAR_subaccount_name"
           echo "   Region: $TF_VAR_subaccount_region"
           echo ""
-          echo "Plot twist: If any value above is empty, your deployment will be sadder than a 404 page."
+          echo "Plot twist: If any value above is empty or has default values, your deployment will be sadder than a 404 page."
           echo "Fix it in terraform.tfvars or GitHub Variables before Terraform throws a tantrum!"
           echo ""
 
