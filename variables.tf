@@ -68,3 +68,10 @@ variable "subaccount_viewers" {
   description = "List of users to be assigned the Subaccount Viewer role in the SAP BTP subaccount"
   default     = []
 }
+
+variable "cf_session_token" {
+  type        = string
+  description = "The session token for Cloud Foundry authentication"
+  sensitive   = true # This hides the code from your terminal logs
+  default = null
+}
