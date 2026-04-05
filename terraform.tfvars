@@ -1,5 +1,0 @@
-globalaccount               = "sap-developer-advocates-free-tier"
-subaccount_name             = "Joule_Studio"
-subaccount_region           = "eu10"
-identity_provider           = "a7rg4vxjp.accounts.ondemand.com"
-subaccount_subdomain        = "js-subdomain"

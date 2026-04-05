@@ -19,3 +19,4 @@ terraform.tfstate.backup
 *.backup
 planned
 $HOME
+terraform.tfvars
