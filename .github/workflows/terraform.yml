@@ -17,11 +17,14 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: write
+  
 jobs:
   terraform:
     name: Terraform ${{ github.event.inputs.action }}
     runs-on: ubuntu-latest
-    
+  
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       # From GitHub Variables
